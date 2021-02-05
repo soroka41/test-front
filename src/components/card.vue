@@ -1,7 +1,7 @@
 <template>
   <div class="card mt-3 mb-3">
     <div class="card-body"   v-if="card">
-      <p class="card-text" v-if="!showRedact">{{card.text_commit}}</p>
+      <p class="card-text" v-if="!showRedact">{{oldCommit !==''? oldCommit: card.text_commit}}</p>
       <div class="form-group" v-if="showRedact">
         <label for="">Отредактировать коммит</label>
         <input type="text" class="form-control" placeholder="Написать ваш комментарий" v-model="card.text_commit">
@@ -11,7 +11,7 @@
         <p>{{card.date_commit}}</p>
         <div class="block-card-action">
           <a @click.prevent="resetCommit" href="" class="w-100 btn btn-primary btn-sm" v-if="showRedact">Отмена</a>
-          <a @click.prevent="updateCommit" href="" class="w-100 btn btn-sm" :class="[!showRedact? 'btn-primary': 'btn-warning']">{{!showRedact?'Редактировать': 'Сохранить'}}</a>
+          <a @click.prevent="updateCommit(card.text_commit)" href="" class="w-100 btn btn-sm" :class="[!showRedact? 'btn-primary': 'btn-warning']">{{!showRedact?'Редактировать': 'Сохранить'}}</a>
           <a @click.prevent="deleteCommit(cardIdx)" href="" class="w-100 btn btn-danger btn-sm" v-if="!showRedact">Удалить</a>
         </div>
 
@@ -26,7 +26,8 @@
     name: 'card.vue',
     data: () => ({
       showRedact: false,
-      commitInput: ''
+      commitInput: '',
+      oldCommit: ''
     }),
     computed: {
       valueInput() {
@@ -40,13 +41,15 @@
     methods: {
       resetCommit() {
         this.showRedact =! this.showRedact
+
       },
       deleteCommit(cardIdx) {
         this.$emit('deleteCommit', cardIdx)
 
       },
-      updateCommit() {
-        console.log(this.card)
+      updateCommit(data) {
+        console.log('update', data)
+        this.oldCommit = data
         this.showRedact =! this.showRedact
         // this.$emit('updateCommit', data)
         console.log('2', this.showRedact )
