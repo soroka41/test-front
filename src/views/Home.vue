@@ -5,10 +5,19 @@
         <div class="col-12">
           <div class="form-group">
             <h5 class="card-title mb-3">Продукт A</h5>
-            <input type="text" class="form-control" placeholder="Написать ваш комментарий" v-model="commitInput">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Написать ваш комментарий"
+              v-model="commitInput"
+            />
             <div class="action-blocks" v-if="commitInput !== ''">
-              <button @click.prevent="addCommit"  class="btn btn-primary m-3">Сохранить</button>
-              <button @click.prevent="updateCommit"  class="btn btn-light">Отмена</button>
+              <button @click.prevent="addCommit" class="btn btn-primary m-3">
+                Сохранить
+              </button>
+              <button @click.prevent="updateCommit" class="btn btn-light">
+                Отмена
+              </button>
             </div>
             <div v-if="alert" class="alert alert-primary" role="alert">
               Поле не должны быть пустым
@@ -32,45 +41,43 @@
 
 <script>
 // @ is an alias to /src
-import card from '@/components/card.vue'
+import card from "@/components/card.vue";
 export default {
-  data: () =>({
+  data: () => ({
     alert: false,
     commit: [],
-    commitInput: ''
+    commitInput: "",
   }),
   components: {
-    card
+    card,
   },
   methods: {
     deleteCommit(data) {
-      let success = confirm("Удалить")
-      if(success)
-        this.commit = this.commit.filter((i, idx) => idx !== data)
+      let success = confirm("Удалить");
+      if (success) this.commit = this.commit.filter((i, idx) => idx !== data);
     },
-    updateCommit() {
-    },
+    updateCommit() {},
     addCommit() {
-      this.alert = false
-      if(this.commitInput !== '') {
-        let commitItem = {}
-        commitItem.date_commit = new Date().toLocaleString()
-        commitItem.text_commit = this.commitInput
-        commitItem.user_commit = 'Петя'
-        this.commit.unshift(commitItem)
-        this.commitInput = ''
-        console.log(this.commit)
+      this.alert = false;
+      if (this.commitInput !== "") {
+        let commitItem = {};
+        commitItem.date_commit = new Date().toLocaleString();
+        commitItem.text_commit = this.commitInput;
+        commitItem.user_commit = "Петя";
+        this.commit.unshift(commitItem);
+        this.commitInput = "";
+        console.log(this.commit);
       } else {
-        this.alert = true
+        this.alert = true;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss">
-  .home {
-    margin: 0 auto;
-    width: 700px;
-    padding: 40px;
-  }
+.home {
+  margin: 0 auto;
+  width: 700px;
+  padding: 40px;
+}
 </style>
